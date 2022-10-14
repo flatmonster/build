@@ -408,7 +408,8 @@ QEMU_XEN	?= -drive if=none,file=$(XEN_EXT4),format=raw,id=hd1 \
 else
 QEMU_CPU	?= max,sve=off
 QEMU_SMP 	?= 2
-QEMU_MEM 	?= 1057
+#QEMU_MEM 	?= 1057
+QEMU_MEM ??= 3072 #MB default setting is 1057
 QEMU_VIRT	= false
 endif
 
@@ -430,7 +431,7 @@ run-only:
 		-nographic \
 		-serial tcp:localhost:54320 -serial tcp:localhost:54321 \
 		-smp $(QEMU_SMP) \
-		-s -S -machine virt,secure=on,mte=$(QEMU_MTE),gic-version=$(QEMU_GIC_VERSION),virtualization=$(QEMU_VIRT) \
+		-s -machine virt,secure=on,mte=$(QEMU_MTE),gic-version=$(QEMU_GIC_VERSION),virtualization=$(QEMU_VIRT) \
 		-cpu $(QEMU_CPU) \
 		-d unimp -semihosting-config enable=on,target=native \
 		-m $(QEMU_MEM) \
